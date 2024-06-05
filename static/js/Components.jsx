@@ -10,7 +10,7 @@ function Homepage(props) {
 }
 
 function AllMelonsPage(props) {
-  const { melons } = props;
+  const { melons, addMelonToCart} = props;
   const melonCards = [];
 
   for (const melon of Object.values(melons)) {
@@ -21,10 +21,13 @@ function AllMelonsPage(props) {
         name={melon.name}
         imgUrl= {melon.image_url}
         price={melon.price}
+        handleAddToCart ={addMelonToCart}
       />
     );
 
     melonCards.push(melonCard);
+    
+
   }
   return (
     <React.Fragment>
@@ -37,6 +40,25 @@ function AllMelonsPage(props) {
 }
 
 function ShoppingCartPage(props) {
+  const {cart, melons} = props;
+  const tableData = [];
+  let totalCost = 0;
+
+  for (const melonId in cart){
+    const currentMelon = melons[melonId]
+    const melonCost = cart[melonId] * currentMelon.price
+    totalCost += melonCost;
+    tableData.push(
+      <tr key={melonId}>
+        <td>{currentMelon.name}</td>
+        <td>{cart[melonId]}</td>
+        <td>${melonCost.toFixed(2)}</td>
+      </tr>
+    )
+  }
+
+  
+
   return (
     <React.Fragment>
       <h1>Shopping Cart</h1>
@@ -49,9 +71,9 @@ function ShoppingCartPage(props) {
               <th>Total</th>
             </tr>
           </thead>
-          <tbody />
+          <tbody>{ tableData }</tbody>
         </table>
-        <p className="lead">Total: ${(0).toFixed(2)}</p>
+        <p className="lead">Total: ${totalCost.toFixed(2)}</p>
       </div>
     </React.Fragment>
   );

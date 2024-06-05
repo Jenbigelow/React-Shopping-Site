@@ -12,8 +12,8 @@ function App() {
   function addMelonToCart(melonCode) {
     setShoppingCart((currentShoppingCart) => {
       const newShoppingCart = Object.assign({}, currentShoppingCart);
-      if(newshoppingCart[melonCode]) {
-        newShoppingCart[melonCode] + 1;
+      if(newShoppingCart[melonCode]) {
+        newShoppingCart[melonCode] += 1;
 
       }
       else{
@@ -25,7 +25,7 @@ function App() {
     })
   }
 
-
+  return (
     <ReactRouterDOM.BrowserRouter>
       <Navbar logo="/static/img/watermelon.png" brand="Ubermelon" />
       <div className="container-fluid">
@@ -33,15 +33,15 @@ function App() {
           <Homepage />
         </ReactRouterDOM.Route>
         <ReactRouterDOM.Route exact path="/shop">
-          <AllMelonsPage melons={melons} />
+          <AllMelonsPage melons={melons} addMelonToCart={addMelonToCart}/>
         </ReactRouterDOM.Route>
         <ReactRouterDOM.Route exact path="/cart">
-          <ShoppingCartPage />
+          <ShoppingCartPage cart = {shoppingCart} melons = {melons}/>
         </ReactRouterDOM.Route>
       </div>
-    </ReactRouterDOM.BrowserRouter>
+    </ReactRouterDOM.BrowserRouter> );
 
-    
+      
 }
 ReactDOM.render(<App />, document.querySelector('#root'));
 
